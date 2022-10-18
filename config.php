@@ -1,13 +1,12 @@
 <?php
 	class Config {
-	  // Database Details
+	  
+        // Database credentials for connection
 	  private const DBHOST = 'localhost';
 	  private const DBUSER = 'root';
-	  private const DBPASS = '';
-	  private const DBNAME = 'restful';
-	  // Data Source Network
+	  private const DBPASS = 'root';
+	  private const DBNAME = 'rest';
 	  private $dsn = 'mysql:host=' . self::DBHOST . ';dbname=' . self::DBNAME . '';
-	  // conn variable
 	  protected $conn = null;
 
 	  // Constructor Function
