@@ -2,9 +2,8 @@
 	// Include config.php file
 	include_once 'config.php';
 
-	// Create a class Users
 	class Database extends Config {
-	  // Fetch all or a single user from database
+	  // Fetch product from database
 	  public function fetch($id = 0) {
 	    $sql = 'SELECT * FROM users';
 	    if ($id != 0) {
