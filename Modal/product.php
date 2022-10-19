@@ -10,7 +10,7 @@ require_once __DIR__."/../../core/Validator.php";
 require_once __DIR__."/../../core/Response.php";
 
 
-class ProductModel
+class ProductDB
 {
     private Database $db;
     private ProductQueries $queries;
