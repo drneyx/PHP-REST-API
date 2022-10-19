@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__."/Modal/product.php";
+require_once __DIR__."/Modal/productDB.php";
 
 class Util {
 

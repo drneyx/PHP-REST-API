@@ -18,7 +18,7 @@ $api = $_SERVER['REQUEST_METHOD'];
 $id = intval($_GET['id'] ?? '');
 
 if ($api == 'GET') {
-    return $util->getAllProducts();
+    echo $util->getAllProducts();
 }
 
 
