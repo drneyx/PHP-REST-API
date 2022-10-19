@@ -11,21 +11,21 @@ class Util {
         $this->productDB = new ProductDB();
     }
 
-    // // Add product to the DB
-    // public function addProduct($data)
-    // {
-    //     $data = json_decode($data, true);
-    //     if ($data == null) {
-    //         http_response_code(500);
-    //         return false;
-    //     }
-    //     foreach ($data as $key => $value) {
-    //         if ($value === "") {
-    //             unset($data[$key]);
-    //         }
-    //     }
-    //     return $this->productDB->addProduct($data);
-    // }
+    // Add product to the DB
+    public function addProduct($data)
+    {
+        $data = json_decode($data, true);
+        if ($data == null) {
+            http_response_code(500);
+            return false;
+        }
+        foreach ($data as $key => $value) {
+            if ($value === "") {
+                unset($data[$key]);
+            }
+        }
+        return $this->productDB->addProduct($data);
+    }
 
 
     // Get list of all products
