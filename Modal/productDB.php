@@ -1,13 +1,6 @@
 <?php
 
-require_once __DIR__."/../Database/db.php";
-require_once __DIR__."/../Database/query.php";
-require_once __DIR__."/factory.php";
-require_once __DIR__."/DVD.php";
-require_once __DIR__."/Book.php";
-require_once __DIR__."/furniture.php";
-// require_once __DIR__."/../../core/Validator.php";
-// require_once __DIR__."/../../core/Response.php";
+require_once __DIR__."/../classes.php";
 
 
 class ProductDB

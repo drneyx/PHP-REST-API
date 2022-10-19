@@ -2,7 +2,7 @@
 
 require_once  __DIR__."/product.php";
 
-class DVD extends ProductL
+class DVD extends Product
 {
     private int $size;
     private static array $rules = array(

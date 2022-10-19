@@ -1,6 +1,6 @@
 <?php
 
-abstract class ProductL
+abstract class Product
 {
     private $id;
     private string $sku;
@@ -24,7 +24,7 @@ abstract class ProductL
     public static abstract function listRules(): array;
 
     public static function getRules(): array {
-        return ProductL::$rules;
+        return Product::$rules;
     }
 
     public abstract function asDict(): array;

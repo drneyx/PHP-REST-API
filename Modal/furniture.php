@@ -2,7 +2,7 @@
 
 require_once  __DIR__."/product.php";
 
-class Furniture extends ProductL
+class Furniture extends Product
 {
     private float $height;
     private float $width;
