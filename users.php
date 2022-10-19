@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 // Include action.php file
 // include_once 'db.php';
-require_once __DIR__."/utils.php";
+require_once __DIR__."/Shared/utils.php";
 // Create object of Users class
 // $user = new Database();
 $util = new Util();
