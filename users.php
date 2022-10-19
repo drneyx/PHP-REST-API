@@ -6,10 +6,10 @@ header('Content-Type: application/json');
 
 
 // Include action.php file
-include_once 'db.php';
+// include_once 'db.php';
 require_once __DIR__."/utils.php";
 // Create object of Users class
-$user = new Database();
+// $user = new Database();
 $util = new Util();
 // create a api variable to get HTTP method dynamically
 $api = $_SERVER['REQUEST_METHOD'];
