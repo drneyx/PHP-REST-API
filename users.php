@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 // Include action.php file
 // include_once 'db.php';
-require_once __DIR__."/utils.php";
+require_once __DIR__."/Shared/utils.php";
 // Create object of Users class
 // $user = new Database();
 $util = new Util();
@@ -21,17 +21,9 @@ if ($api == 'GET') {
     echo $util->getAllProducts();
 }
 
-
 if ($api == 'POST') {
-	$name = $user->test_input($_POST['name']);
-	$email = $user->test_input($_POST['email']);
-	$phone = $user->test_input($_POST['phone']);
-
-	if ($user->insert($name, $email, $phone)) {
-		echo $user->message('User added successfully!',false);
-	} else {
-		echo $user->message('Failed to add an user!',true);
-	}
+    $data = json_encode($_POST);
+    echo $util->addProduct($data);
 }
 
 

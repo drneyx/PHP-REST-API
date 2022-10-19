@@ -1,6 +1,7 @@
 <?php
 
 require_once  __DIR__."/product.php";
+
 class Book extends Product
 {
     private float $weight;
