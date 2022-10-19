@@ -21,17 +21,9 @@ if ($api == 'GET') {
     echo $util->getAllProducts();
 }
 
-
 if ($api == 'POST') {
-	$name = $user->test_input($_POST['name']);
-	$email = $user->test_input($_POST['email']);
-	$phone = $user->test_input($_POST['phone']);
-
-	if ($user->insert($name, $email, $phone)) {
-		echo $user->message('User added successfully!',false);
-	} else {
-		echo $user->message('Failed to add an user!',true);
-	}
+    $data = json_encode($_POST);
+    echo $util->addProduct($data);
 }
 
 
