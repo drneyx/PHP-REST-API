@@ -16,7 +16,7 @@ class ProductQuery
 
     public function selectAll(): string
     {
-        return 'SELECT * FROM product;';
+        return 'SELECT * FROM prod;';
 
     }
 
