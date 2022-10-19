@@ -1,8 +1,8 @@
 <?php
 
 require_once __DIR__."/../Database/db.php";
-require_once __DIR__."/ProductQueries.php";
-require_once __DIR__."/ProductFactory.php";
+require_once __DIR__."/../Database/query.php";
+require_once __DIR__."/factory.php";
 require_once __DIR__."/DVD.php";
 require_once __DIR__."/Furniture.php";
 require_once __DIR__."/Book.php";
@@ -13,15 +13,15 @@ require_once __DIR__."/../../core/Response.php";
 class ProductDB
 {
     private Dbh $db;
-    private ProductQueries $queries;
-    private Validator $validator;
-    private ProductFactory $factory;
+    private ProductQuery $query;
+    // private Validator $validator;
+    // private ProductFactory $factory;
 
     public function __construct()
     {
-        $this->db = new Database();
-        $this->queries = new ProductQueries();
-        $this->validator = new Validator();
+        $this->db = new Dbh();
+        $this->query = new ProductQuery();
+        // $this->validator = new Validator();
 
         $this->factory = new ProductFactory(array(
             "DVD" => DVD::class,
@@ -34,7 +34,7 @@ class ProductDB
 
     public function selectAll()
     {
-        $products = $this->db->execute($this->queries->selectAll())->fetchAll();
+        $products = $this->db->execute($this->query->selectAll())->fetchAll();
 
         $result = array();
 
@@ -47,74 +47,73 @@ class ProductDB
 
     }
 
-    public function addProduct($dict): bool|string
-    {
-        $product = $this->validate($dict);
+    // public function addProduct($dict): bool|string
+    // {
+    //     $product = $this->validate($dict);
 
-        $response = new Response();
-        if (is_bool($product)) {
-            $response->setStatusCode(400);
-            return json_encode(array("skuErr" => true));
-        }
+    //     if (is_bool($product)) {
+    //         $response= http_response_code(400);
+    //         return json_encode(array("skuErr" => true));
+    //     }
 
-        $params = $product->getParams();
-        $product = $product->asDict();
+    //     $params = $product->getParams();
+    //     $product = $product->asDict();
 
-        $query = $this->queries->insert($product["type"]);
-        try {
-            $this->db->prepareAndExecute($query, $params);
-        } catch (\Throwable $t) {
-            return $t->getMessage();
-        }
+    //     $query = $this->queries->insert($product["type"]);
+    //     try {
+    //         $this->db->stmtPrepareAndExecute($query, $params);
+    //     } catch (\Throwable $t) {
+    //         return $t->getMessage();
+    //     }
 
-        $response->setStatusCode(200);
-        return true;
+    //     $response= http_response_code(200);
+    //     return true;
 
-    }
+    // }
 
-    public function delete($idList)
-    {
-        $query = $this->queries->delete();
-        $inQuery = "";
-        $params = array();
-        foreach ($idList as $index => $value) {
-            $inQuery = $inQuery.":product".$index.", ";
-            $params[":product".$index] = $value;
-        }
+    // public function delete($idList)
+    // {
+    //     $query = $this->queries->delete();
+    //     $inQuery = "";
+    //     $params = array();
+    //     foreach ($idList as $index => $value) {
+    //         $inQuery = $inQuery.":product".$index.", ";
+    //         $params[":product".$index] = $value;
+    //     }
 
-        $inQuery = substr($inQuery, 0, -2);
-        $query = str_replace(":productList", $inQuery, $query);
+    //     $inQuery = substr($inQuery, 0, -2);
+    //     $query = str_replace(":productList", $inQuery, $query);
 
-        try {
-            $this->db->prepareAndExecute($query, $params);
-        } catch (\Throwable $t) {
-            return $t->getMessage();
-        }
+    //     try {
+    //         $this->db->stmtPrepareAndExecute($query, $params);
+    //     } catch (\Throwable $t) {
+    //         return $t->getMessage();
+    //     }
 
-    }
+    // }
 
-    private function validate($params): bool|Product
-    {
-        $rules = $this->factory->getRules($params);
-        $valid = $this->validator->validate($params, $rules);
+    // private function validate($params): bool|Product
+    // {
+    //     $rules = $this->factory->getRules($params);
+    //     $valid = $this->validator->validate($params, $rules);
 
-        if ($valid == false) {
-            return false;
-        }
+    //     if ($valid == false) {
+    //         return false;
+    //     }
 
-        $query = $this->queries->exists();
-        try {
-            $result = $this->db->prepareAndExecute($query, array(":sku" => $params["sku"]));
-        } catch (\Throwable $t) {
-            return $t->getMessage();
-        }
+    //     $query = $this->queries->exists();
+    //     try {
+    //         $result = $this->db->stmtPrepareAndExecute($query, array(":sku" => $params["sku"]));
+    //     } catch (\Throwable $t) {
+    //         return $t->getMessage();
+    //     }
 
-        if ($result->fetch(PDO::FETCH_NUM)[0] == 1) {
-            return false;
-        }
+    //     if ($result->fetch(PDO::FETCH_NUM)[0] == 1) {
+    //         return false;
+    //     }
 
-        return $this->factory->newProduct($params);
-    }
+    //     return $this->factory->newProduct($params);
+    // }
 
 
 }
