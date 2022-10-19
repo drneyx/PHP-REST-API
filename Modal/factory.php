@@ -1,5 +1,7 @@
 <?php
 
+
+
 class ProductFactory
 {
     private  array $dict;
