@@ -2,7 +2,7 @@
 
 require_once  __DIR__."/product.php";
 
-class Book extends Product
+class Book extends ProductL
 {
     private float $weight;
     private static array $rules = array(
