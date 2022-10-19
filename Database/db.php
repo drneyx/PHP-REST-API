@@ -22,7 +22,6 @@ class Dbh
         $result = $conn->query($query);
         $conn = null;
         return $result;
-
     }
 
     /* Prepare and execute statement */
@@ -33,7 +32,6 @@ class Dbh
         $result = $stmt;
         $conn = null;
         return $result;
-
     }
 
 }

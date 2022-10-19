@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__."/../../core/Database.php";
+require_once __DIR__."/../Database/db.php";
 require_once __DIR__."/ProductQueries.php";
 require_once __DIR__."/ProductFactory.php";
 require_once __DIR__."/DVD.php";
@@ -12,7 +12,7 @@ require_once __DIR__."/../../core/Response.php";
 
 class ProductDB
 {
-    private Database $db;
+    private Dbh $db;
     private ProductQueries $queries;
     private Validator $validator;
     private ProductFactory $factory;
