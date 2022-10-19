@@ -15,7 +15,7 @@ class ProductDB
     private Dbh $db;
     private ProductQuery $query;
     // private Validator $validator;
-    // private ProductFactory $factory;
+    private ProductFactory $factory;
 
     public function __construct()
     {

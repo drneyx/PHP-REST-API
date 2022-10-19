@@ -7,9 +7,10 @@ header('Content-Type: application/json');
 
 // Include action.php file
 include_once 'db.php';
+require_once __DIR__."/utils.php";
 // Create object of Users class
 $user = new Database();
-
+$util = new Util();
 // create a api variable to get HTTP method dynamically
 $api = $_SERVER['REQUEST_METHOD'];
 
@@ -17,12 +18,7 @@ $api = $_SERVER['REQUEST_METHOD'];
 $id = intval($_GET['id'] ?? '');
 
 if ($api == 'GET') {
-	if ($id != 0) {
-		$data = $user->fetch($id);
-	} else {
-		$data = $user->fetch();
-	}
-	echo json_encode($data);
+    return $this->util->getAllProducts();
 }
 
 

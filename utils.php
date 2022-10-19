@@ -11,21 +11,21 @@ class Util {
         $this->productDB = new ProductDB();
     }
 
-    // Add product to the DB
-    public function addProduct($data)
-    {
-        $data = json_decode($data, true);
-        if ($data == null) {
-            http_response_code(500);
-            return false;
-        }
-        foreach ($data as $key => $value) {
-            if ($value === "") {
-                unset($data[$key]);
-            }
-        }
-        return $this->productDB->addProduct($data);
-    }
+    // // Add product to the DB
+    // public function addProduct($data)
+    // {
+    //     $data = json_decode($data, true);
+    //     if ($data == null) {
+    //         http_response_code(500);
+    //         return false;
+    //     }
+    //     foreach ($data as $key => $value) {
+    //         if ($value === "") {
+    //             unset($data[$key]);
+    //         }
+    //     }
+    //     return $this->productDB->addProduct($data);
+    // }
 
 
     // Get list of all products
@@ -37,18 +37,18 @@ class Util {
 
 
 
-    // Mass delete of the products using product id's
-    public function massDeleteProducts($data) {
+    // // Mass delete of the products using product id's
+    // public function massDeleteProducts($data) {
 
-        $data = json_decode($data, true);
-        $data = $data["productList"];
-        $productList = [];
-        foreach ($data as $key => $value) {
-            if ($value == true) {
-                $productList[] = $key;
-            }
-        }
-        return $this->productDB->delete($productList);
-    }
+    //     $data = json_decode($data, true);
+    //     $data = $data["productList"];
+    //     $productList = [];
+    //     foreach ($data as $key => $value) {
+    //         if ($value == true) {
+    //             $productList[] = $key;
+    //         }
+    //     }
+    //     return $this->productDB->delete($productList);
+    // }
 
 }
