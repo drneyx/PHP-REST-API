@@ -52,7 +52,7 @@ class ProductDB
         $params = $product->getParams();
         $product = $product->asDict();
 
-        $query = $this->queries->insert($product["type"]);
+        $query = $this->query->insert($product["type"]);
         try {
             $this->db->stmtPrepareAndExecute($query, $params);
         } catch (\Throwable $t) {

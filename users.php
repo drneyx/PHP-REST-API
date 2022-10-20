@@ -27,7 +27,6 @@ if ($api == 'POST') {
 }
 
 
-
 if ($api == 'PUT') {
 	parse_str(file_get_contents('php://input'), $post_input);
 
