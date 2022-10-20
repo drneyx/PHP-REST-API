@@ -27,7 +27,7 @@ class ProductQuery
 
     public function insert($type)
     {
-        if (array_key_exists($type, $this->dict)) {
+        if (array_key_exists($type, $this->prodDict)) {
             return $this->prodDict[$type];
         } else {
             $response = http_response_code(500);
@@ -37,17 +37,17 @@ class ProductQuery
 
     private function insertDVD(): string
     {
-        return "INSERT INTO product (sku, name, price, type, size) 
+        return "INSERT INTO prod (sku, name, price, type, size) 
                 VALUES (:sku, :name, :price, 'DVD', :size)";
     }
     private function insertFurniture(): string
     {
-        return "INSERT INTO product (sku, name, price, type, height, width, length) 
+        return "INSERT INTO prod (sku, name, price, type, height, width, length) 
                 VALUES (:sku, :name, :price, 'Furniture', :height, :width, :length)";
     }
     private function insertBook(): string
     {
-        return "INSERT INTO product (sku, name, price, type, weight) 
+        return "INSERT INTO prod (sku, name, price, type, weight) 
                 VALUES (:sku, :name, :price, 'Book', :weight)";
     }
 

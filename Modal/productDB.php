@@ -52,15 +52,15 @@ class ProductDB
         $params = $product->getParams();
         $product = $product->asDict();
 
-        // $query = $this->query->insert($product["type"]);
-        // try {
-        //     $this->db->stmtPrepareAndExecute($query, $params);
-        // } catch (\Throwable $t) {
-        //     return $t->getMessage();
-        // }
+        $query = $this->query->insert($product["type"]);
+        try {
+            $this->db->stmtPrepareAndExecute($query, $params);
+        } catch (\Throwable $t) {
+            return $t->getMessage();
+        }
 
-        // $response= http_response_code(200);
-        return json_encode($product);
+        $response= http_response_code(200);
+        return true;
 
     }
 
