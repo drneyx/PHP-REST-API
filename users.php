@@ -27,13 +27,6 @@ if ($api == 'POST') {
 }
 
 if ($api == 'DELETE') {
-	if ($id != null) {
-		if ($user->delete($id)) {
-			echo $user->message('User deleted successfully!', false);
-		} else {
-			echo $user->message('Failed to delete an user!', true);
-		}
-	} else {
-		echo $user->message('User not found!', true);
-	}
+    $data = json_encode($_POST);
+    echo $util->massDelete($data);
 }
