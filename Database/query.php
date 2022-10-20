@@ -53,7 +53,7 @@ class ProductQuery
 
     public function delete(): string
     {
-        return "DELETE FROM product WHERE id IN (:productList)";
+        return "DELETE FROM prod WHERE id IN (:productList)";
     }
 
 }
