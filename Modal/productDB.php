@@ -44,13 +44,13 @@ class ProductDB
     {
         $product = $this->validate($dict);
 
-        // if (is_bool($product)) {
-        //     $response= http_response_code(400);
-        //     return json_encode(array("skuErr" => true));
-        // }
+        if (is_bool($product)) {
+            $response= http_response_code(400);
+            return json_encode(array("skuErr" => true));
+        }
 
-        // $params = $product->getParams();
-        // $product = $product->asDict();
+        $params = $product->getParams();
+        $product = $product->asDict();
 
         // $query = $this->query->insert($product["type"]);
         // try {
@@ -60,7 +60,7 @@ class ProductDB
         // }
 
         // $response= http_response_code(200);
-        return $dict;
+        return json_encode($product);
 
     }
 
@@ -105,7 +105,7 @@ class ProductDB
             return false;
         }
 
-        return $this->factory->newProduct($params) ;
+        return $this->factory->newProduct($params);
     }
 
 

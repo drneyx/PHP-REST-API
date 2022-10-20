@@ -22,7 +22,7 @@ class ProductQuery
 
     public function exists(): string
     {
-        return 'SELECT EXISTS(SELECT * FROM product WHERE sku = (:sku));';
+        return 'SELECT EXISTS(SELECT * FROM prod WHERE sku = (:sku));';
     }
 
     public function insert($type)
