@@ -28,5 +28,5 @@ if ($api == 'POST') {
 
 if ($api == 'DELETE') {
     $data = json_encode($_POST);
-    echo $util->massDeleteProducts($data);
+    echo $data;
 }
