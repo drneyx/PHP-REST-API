@@ -40,6 +40,7 @@ if ($api == 'POST') {
 }
 
 if ($api == 'DELETE') {
-    $data = json_encode($_POST);
+    $_DELETE = parseInput();
+    $data = json_encode($_DELETE);
     echo $data;
 }
