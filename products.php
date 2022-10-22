@@ -40,7 +40,10 @@ if ($api == 'POST') {
 }
 
 if ($api == 'DELETE') {
+    $body = file_get_contents("php://input");
     $_DELETE = parseInput();
-    $data = json_encode($_DELETE);
-    echo $data;
+    // echo print_r($_DELETE, true);
+    // $data = json_encode($_DELETE);
+    print_r($body);
+    // echo $util->massDeleteProducts($_DELETE);
 }
