@@ -37,18 +37,18 @@ class Util {
 
 
 
-    // // Mass delete of the products using product id's
-    // public function massDeleteProducts($data) {
+    // Mass delete of the products using product id's
+    public function massDeleteProducts($data) {
 
-    //     $data = json_decode($data, true);
-    //     $data = $data["productList"];
-    //     $productList = [];
-    //     foreach ($data as $key => $value) {
-    //         if ($value == true) {
-    //             $productList[] = $key;
-    //         }
-    //     }
-    //     return $this->productDB->delete($productList);
-    // }
+        $data = json_decode($data, true);
+        $data = $data["productList"];
+        $productList = [];
+        foreach ($data as $key => $value) {
+            if ($value == true) {
+                $productList[] = $key;
+            }
+        }
+        return $this->productDB->massDelete($productList);
+    }
 
 }

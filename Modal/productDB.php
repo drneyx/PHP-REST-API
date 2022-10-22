@@ -52,7 +52,7 @@ class ProductDB
         $params = $product->getParams();
         $product = $product->asDict();
 
-        $query = $this->queries->insert($product["type"]);
+        $query = $this->query->insert($product["type"]);
         try {
             $this->db->stmtPrepareAndExecute($query, $params);
         } catch (\Throwable $t) {
@@ -64,26 +64,26 @@ class ProductDB
 
     }
 
-    // public function delete($idList)
-    // {
-    //     $query = $this->queries->delete();
-    //     $inQuery = "";
-    //     $params = array();
-    //     foreach ($idList as $index => $value) {
-    //         $inQuery = $inQuery.":product".$index.", ";
-    //         $params[":product".$index] = $value;
-    //     }
+    public function massDelete($idList)
+    {
+        $query = $this->query->delete();
+        $inQuery = "";
+        $params = array();
+        foreach ($idList as $index => $value) {
+            $inQuery = $inQuery.":product".$index.", ";
+            $params[":product".$index] = $value;
+        }
 
-    //     $inQuery = substr($inQuery, 0, -2);
-    //     $query = str_replace(":productList", $inQuery, $query);
+        $inQuery = substr($inQuery, 0, -2);
+        $query = str_replace(":productList", $inQuery, $query);
 
-    //     try {
-    //         $this->db->stmtPrepareAndExecute($query, $params);
-    //     } catch (\Throwable $t) {
-    //         return $t->getMessage();
-    //     }
+        try {
+            $this->db->stmtPrepareAndExecute($query, $params);
+        } catch (\Throwable $t) {
+            return $t->getMessage();
+        }
 
-    // }
+    }
 
     private function validate($params): bool|Product
     {
