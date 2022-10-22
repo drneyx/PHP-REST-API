@@ -14,6 +14,19 @@ $util = new Util();
 // create a api variable to get HTTP method dynamically
 $api = $_SERVER['REQUEST_METHOD'];
 
+
+function parseInput()
+{
+    $data = file_get_contents("php://input");
+
+    if($data == false)
+        return array();
+
+    parse_str($data, $result);
+
+    return $result;
+}
+
 // get id from url
 $id = intval($_GET['id'] ?? '');
 
