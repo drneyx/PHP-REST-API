@@ -35,6 +35,12 @@ class ProductQuery
         }
     }
 
+    private function insertBook(): string
+    {
+        return "INSERT INTO prod (sku, name, price, type, weight) 
+                VALUES (:sku, :name, :price, 'Book', :weight)";
+    }
+
     private function insertDVD(): string
     {
         return "INSERT INTO prod (sku, name, price, type, size) 
@@ -45,14 +51,11 @@ class ProductQuery
         return "INSERT INTO prod (sku, name, price, type, height, width, length) 
                 VALUES (:sku, :name, :price, 'Furniture', :height, :width, :length)";
     }
-    private function insertBook(): string
-    {
-        return "INSERT INTO prod (sku, name, price, type, weight) 
-                VALUES (:sku, :name, :price, 'Book', :weight)";
-    }
+  
 
     public function delete(): string
     {
+        
         return "DELETE FROM prod WHERE id IN (:productList)";
     }
 

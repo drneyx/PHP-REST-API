@@ -66,12 +66,12 @@ class ProductDB
 
     public function massDelete($idList)
     {
-        $query = $this->query->delete();
+        $query = $this->query->delete($idList);
         $inQuery = "";
         $params = array();
         foreach ($idList as $index => $value) {
-            $inQuery = $inQuery.":product".$index.", ";
-            $params[":product".$index] = $value;
+            $inQuery = $inQuery.":prod".$index.", ";
+            $params[":prod".$index] = $value;
         }
 
         $inQuery = substr($inQuery, 0, -2);
@@ -79,9 +79,12 @@ class ProductDB
 
         try {
             $this->db->stmtPrepareAndExecute($query, $params);
+            return json_encode("success");
+            
         } catch (\Throwable $t) {
             return $t->getMessage();
         }
+      
 
     }
 

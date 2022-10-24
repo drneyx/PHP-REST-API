@@ -45,7 +45,7 @@ class Util {
         $productList = [];
         foreach ($data as $key => $value) {
             if ($value == true) {
-                $productList[] = $key;
+                $productList[] = $value;
             }
         }
         return $this->productDB->massDelete($productList);
