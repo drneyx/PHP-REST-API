@@ -2,7 +2,7 @@
 
 require_once __DIR__."/../classes.php";
 
-
+/* Product Modal */
 class ProductDB
 {
     private Dbh $db;
@@ -64,7 +64,7 @@ class ProductDB
 
     public function massDelete($idList)
     {
-        $query = $this->query->delete($idList);
+        $query = $this->query->deleteProducts($idList);
         $inQuery = "";
         $params = array();
         foreach ($idList as $index => $value) {

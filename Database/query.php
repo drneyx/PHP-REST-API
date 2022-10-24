@@ -26,6 +26,13 @@ class ProductQuery
         $query = 'SELECT EXISTS(SELECT * FROM prod WHERE sku = (:sku));';
         return $query;
     }
+    
+
+    public function deleteProducts(): string
+    {
+        $query = "DELETE FROM prod WHERE id IN (:productIds)";
+        return $query;
+    }
 
     public function insert($type)
     {
@@ -58,10 +65,6 @@ class ProductQuery
         return $query;
     }
   
-    public function delete(): string
-    {
-        $query = "DELETE FROM prod WHERE id IN (:productIds)";
-        return $query;
-    }
+  
 
 }

@@ -31,7 +31,7 @@ class Util {
     /* Get list of all products */
     public function getAllProducts()
     {
-        $all_products = $this->productDB->selectAll();
+        $all_products = $this->productDB->listAllProducts();
         return json_encode($all_products);
     }
 
