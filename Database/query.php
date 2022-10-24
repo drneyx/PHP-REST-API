@@ -60,7 +60,7 @@ class ProductQuery
   
     public function delete(): string
     {
-        $query = "DELETE FROM prod WHERE id IN (:productList)";
+        $query = "DELETE FROM prod WHERE id IN (:productIds)";
         return $query;
     }
 

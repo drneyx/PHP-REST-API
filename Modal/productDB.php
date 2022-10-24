@@ -25,13 +25,11 @@ class ProductDB
 
     }
 
-    public function selectAll()
+    public function listAllProducts()
     {
         $products = $this->db->execute($this->query->getAll())->fetchAll();
-
         $result = array();
 
-        // Call factory object's method create with dict as params
         foreach ($products as $p) {
             $result[] = $this->factory->newProduct($p)->asDict();
         }
@@ -75,7 +73,7 @@ class ProductDB
         }
 
         $inQuery = substr($inQuery, 0, -2);
-        $query = str_replace(":productList", $inQuery, $query);
+        $query = str_replace(":productIds", $inQuery, $query);
 
         try {
             $this->db->stmtPrepareAndExecute($query, $params);
