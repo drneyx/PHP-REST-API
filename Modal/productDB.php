@@ -27,7 +27,7 @@ class ProductDB
 
     public function selectAll()
     {
-        $products = $this->db->execute($this->query->selectAll())->fetchAll();
+        $products = $this->db->execute($this->query->getAll())->fetchAll();
 
         $result = array();
 
@@ -97,7 +97,7 @@ class ProductDB
             return false;
         }
 
-        $query = $this->query->exists();
+        $query = $this->query->productExists();
         try {
             $result = $this->db->stmtPrepareAndExecute($query, array(":sku" => $params["sku"]));
         } catch (\Throwable $t) {
