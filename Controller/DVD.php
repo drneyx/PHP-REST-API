@@ -16,6 +16,7 @@ class DVD extends Product
         parent::__construct($params["id"] ?? null, $params["sku"], $params["name"], $params["price"]);
     }
 
+    /* Method adopted from the parent class product */
     public static function listRules(): array
     {
         $rules = array();
@@ -29,6 +30,7 @@ class DVD extends Product
         return $rules;
     }
 
+    /* Return array as dictionary */
     public function asDict(): array
     {
         return array(

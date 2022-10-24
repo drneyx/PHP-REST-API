@@ -1,6 +1,6 @@
 <?php
 
-class ProductFactory
+class Factory
 {
     private  array $dict;
 
@@ -16,7 +16,8 @@ class ProductFactory
         return false;
     }
 
-    public function newProduct($params)
+    /* Check if product type exist */
+    public function factProduct($params)
     {
         if (array_key_exists("type", $params)) {
             return new $this->dict[$params["type"]]($params);

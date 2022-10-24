@@ -8,7 +8,7 @@ class ProductDB
     private Dbh $db;
     private ProductQuery $query;
     private Validator $validator;
-    private ProductFactory $factory;
+    private Factory $productFactory;
 
     public function __construct()
     {
@@ -16,7 +16,7 @@ class ProductDB
         $this->query = new ProductQuery();
         $this->validator = new Validator();
 
-        $this->factory = new ProductFactory(array(
+        $this->productFactory = new Factory(array(
             "DVD" => DVD::class,
             "Furniture" => Furniture::class,
             "Book" => Book::class
@@ -25,19 +25,21 @@ class ProductDB
 
     }
 
+    /* Get all products */
     public function listAllProducts()
     {
         $products = $this->db->execute($this->query->getAll())->fetchAll();
         $result = array();
 
         foreach ($products as $p) {
-            $result[] = $this->factory->newProduct($p)->asDict();
+            $result[] = $this->productFactory->factProduct($p)->asDict();
         }
 
         return $result;
 
     }
 
+    /* Add new product to the db modal */
     public function addProduct($dict): bool|string
     {
         $product = $this->validate($dict);
@@ -56,12 +58,36 @@ class ProductDB
         } catch (\Throwable $t) {
             return $t->getMessage();
         }
-
-        $response= http_response_code(200);
+        http_response_code(200);
         return true;
 
     }
 
+    /* Perfom validation first before add and return product instance */
+    private function validate($params): bool|Product
+    {
+        $rules = $this->productFactory->getRules($params);
+        $valid = $this->validator->validate($params, $rules);
+
+        if ($valid == false) {
+            return false;
+        }
+
+        $query = $this->query->productExists();
+        try {
+            $result = $this->db->stmtPrepareAndExecute($query, array(":sku" => $params["sku"]));
+        } catch (\Throwable $t) {
+            return $t->getMessage();
+        }
+
+        if ($result->fetch(PDO::FETCH_NUM)[0] == 1) {
+            return false;
+        }
+
+        return $this->productFactory->factProduct($params);
+    }
+
+    /* Delete multiple products from the database */
     public function massDelete($idList)
     {
         $query = $this->query->deleteProducts($idList);
@@ -82,32 +108,5 @@ class ProductDB
         } catch (\Throwable $t) {
             return $t->getMessage();
         }
-      
-
     }
-
-    private function validate($params): bool|Product
-    {
-        $rules = $this->factory->getRules($params);
-        $valid = $this->validator->validate($params, $rules);
-
-        if ($valid == false) {
-            return false;
-        }
-
-        $query = $this->query->productExists();
-        try {
-            $result = $this->db->stmtPrepareAndExecute($query, array(":sku" => $params["sku"]));
-        } catch (\Throwable $t) {
-            return $t->getMessage();
-        }
-
-        if ($result->fetch(PDO::FETCH_NUM)[0] == 1) {
-            return false;
-        }
-
-        return $this->factory->newProduct($params);
-    }
-
-
 }
