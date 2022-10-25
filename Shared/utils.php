@@ -11,7 +11,7 @@ class Util {
         $this->productDB = new ProductDB();
     }
 
-    // Add product to the DB
+    /* Add product to the DB */
     public function addProduct($data)
     {
         $data = json_decode($data, true);
@@ -28,27 +28,27 @@ class Util {
     }
 
 
-    // Get list of all products
+    /* Get list of all products */
     public function getAllProducts()
     {
-        $all_products = $this->productDB->selectAll();
+        $all_products = $this->productDB->listAllProducts();
         return json_encode($all_products);
     }
 
 
 
-    // Mass delete of the products using product id's
+    /* Mass delete of the products using product id's */
     public function massDeleteProducts($data) {
 
         $data = json_decode($data, true);
-        $data = $data["productList"];
-        $productList = [];
+        $data = $data["productIds"];
+        $newProducts = [];
         foreach ($data as $key => $value) {
             if ($value == true) {
-                $productList[] = $value;
+                $newProducts[] = $value;
             }
         }
-        return $this->productDB->massDelete($productList);
+        return $this->productDB->massDelete($newProducts);
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+/* Fields validation */
 class Validator
 {
     private array $rules;
@@ -40,7 +41,6 @@ class Validator
 
         }
 
-        //var_dump($err);
 
         $resultAsStr = implode('', $err);
         if ($resultAsStr == "") {
@@ -82,14 +82,12 @@ class Validator
         if (preg_match("/^\d+$/", $field)) {
             $valid = true;
         }
-
         return $valid;
     }
 
     private function stringNonEmptyVal($field): bool
     {
         $valid = false;
-
         if (is_string($field) and strlen($field) > 0) {
             $valid = true;
         }

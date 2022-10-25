@@ -2,13 +2,13 @@
 
 require_once __DIR__."/../classes.php";
 
-
+/* Product Modal */
 class ProductDB
 {
     private Dbh $db;
     private ProductQuery $query;
     private Validator $validator;
-    private ProductFactory $factory;
+    private Factory $productFactory;
 
     public function __construct()
     {
@@ -16,7 +16,7 @@ class ProductDB
         $this->query = new ProductQuery();
         $this->validator = new Validator();
 
-        $this->factory = new ProductFactory(array(
+        $this->productFactory = new Factory(array(
             "DVD" => DVD::class,
             "Furniture" => Furniture::class,
             "Book" => Book::class
@@ -25,21 +25,21 @@ class ProductDB
 
     }
 
-    public function selectAll()
+    /* Get all products */
+    public function listAllProducts()
     {
-        $products = $this->db->execute($this->query->selectAll())->fetchAll();
-
+        $products = $this->db->execute($this->query->getAll())->fetchAll();
         $result = array();
 
-        // Call factory object's method create with dict as params
         foreach ($products as $p) {
-            $result[] = $this->factory->newProduct($p)->asDict();
+            $result[] = $this->productFactory->factProduct($p)->asDict();
         }
 
         return $result;
 
     }
 
+    /* Add new product to the db modal */
     public function addProduct($dict): bool|string
     {
         $product = $this->validate($dict);
@@ -58,46 +58,22 @@ class ProductDB
         } catch (\Throwable $t) {
             return $t->getMessage();
         }
-
-        $response= http_response_code(200);
+        http_response_code(200);
         return true;
 
     }
 
-    public function massDelete($idList)
-    {
-        $query = $this->query->delete($idList);
-        $inQuery = "";
-        $params = array();
-        foreach ($idList as $index => $value) {
-            $inQuery = $inQuery.":prod".$index.", ";
-            $params[":prod".$index] = $value;
-        }
-
-        $inQuery = substr($inQuery, 0, -2);
-        $query = str_replace(":productList", $inQuery, $query);
-
-        try {
-            $this->db->stmtPrepareAndExecute($query, $params);
-            return json_encode("success");
-            
-        } catch (\Throwable $t) {
-            return $t->getMessage();
-        }
-      
-
-    }
-
+    /* Perfom validation first before add and return product instance */
     private function validate($params): bool|Product
     {
-        $rules = $this->factory->getRules($params);
+        $rules = $this->productFactory->getRules($params);
         $valid = $this->validator->validate($params, $rules);
 
         if ($valid == false) {
             return false;
         }
 
-        $query = $this->query->exists();
+        $query = $this->query->productExists();
         try {
             $result = $this->db->stmtPrepareAndExecute($query, array(":sku" => $params["sku"]));
         } catch (\Throwable $t) {
@@ -108,8 +84,29 @@ class ProductDB
             return false;
         }
 
-        return $this->factory->newProduct($params);
+        return $this->productFactory->factProduct($params);
     }
 
+    /* Delete multiple products from the database */
+    public function massDelete($idList)
+    {
+        $query = $this->query->deleteProducts($idList);
+        $inQuery = "";
+        $params = array();
+        foreach ($idList as $index => $value) {
+            $inQuery = $inQuery.":prod".$index.", ";
+            $params[":prod".$index] = $value;
+        }
 
+        $inQuery = substr($inQuery, 0, -2);
+        $query = str_replace(":productIds", $inQuery, $query);
+
+        try {
+            $this->db->stmtPrepareAndExecute($query, $params);
+            return json_encode("success");
+            
+        } catch (\Throwable $t) {
+            return $t->getMessage();
+        }
+    }
 }

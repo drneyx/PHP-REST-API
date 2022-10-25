@@ -1,6 +1,6 @@
 <?php
 
-
+/* Perfom all sql operations */
 class ProductQuery
 {
     private array $prodDict;
@@ -14,15 +14,24 @@ class ProductQuery
         $this->prodDict = $ptype;
     }
 
-    public function selectAll(): string
+    public function getAll(): string
     {
-        return 'SELECT * FROM prod;';
-
+        $query = 'SELECT * FROM prod;';
+        return $query;
     }
 
-    public function exists(): string
+
+    public function productExists(): string
     {
-        return 'SELECT EXISTS(SELECT * FROM prod WHERE sku = (:sku));';
+        $query = 'SELECT EXISTS(SELECT * FROM prod WHERE sku = (:sku));';
+        return $query;
+    }
+    
+
+    public function deleteProducts(): string
+    {
+        $query = "DELETE FROM prod WHERE id IN (:productIds)";
+        return $query;
     }
 
     public function insert($type)
@@ -37,26 +46,25 @@ class ProductQuery
 
     private function insertBook(): string
     {
-        return "INSERT INTO prod (sku, name, price, type, weight) 
-                VALUES (:sku, :name, :price, 'Book', :weight)";
+        $query = "INSERT INTO prod (sku, name, price, type, weight) 
+        VALUES (:sku, :name, :price, 'Book', :weight)";
+        return $query;
     }
 
     private function insertDVD(): string
     {
-        return "INSERT INTO prod (sku, name, price, type, size) 
-                VALUES (:sku, :name, :price, 'DVD', :size)";
+        $query = "INSERT INTO prod (sku, name, price, type, size) 
+        VALUES (:sku, :name, :price, 'DVD', :size)";
+        return $query;
     }
+
     private function insertFurniture(): string
     {
-        return "INSERT INTO prod (sku, name, price, type, height, width, length) 
-                VALUES (:sku, :name, :price, 'Furniture', :height, :width, :length)";
+        $query =  "INSERT INTO prod (sku, name, price, type, height, width, length) 
+        VALUES (:sku, :name, :price, 'Furniture', :height, :width, :length)";
+        return $query;
     }
   
-
-    public function delete(): string
-    {
-        
-        return "DELETE FROM prod WHERE id IN (:productList)";
-    }
+  
 
 }

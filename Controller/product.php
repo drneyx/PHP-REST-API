@@ -1,5 +1,6 @@
 <?php
 
+/* Main product Logic */
 abstract class Product
 {
     private $id;
@@ -21,6 +22,7 @@ abstract class Product
 
     }
 
+    /* Define the method to be used by child classes */
     public static abstract function listRules(): array;
 
     public static function getRules(): array {

@@ -6,29 +6,20 @@ header('Content-Type: application/json');
 
 require_once __DIR__."/Shared/utils.php";
 
+
 $util = new Util();
-$api = $_SERVER['REQUEST_METHOD'];
+$api_method = $_SERVER['REQUEST_METHOD'];
 
-
-function parseInput()
-{
-    $data = file_get_contents("php://input");
-    if($data == false)
-        return array();
-    parse_str($data, $result);
-    return $result;
-}
-
-if ($api == 'GET') {
+if ($api_method == 'GET') {
     echo $util->getAllProducts();
 }
 
-if ($api == 'POST') {
+if ($api_method == 'POST') {
     $body = file_get_contents("php://input");
     echo $util->addProduct($body);
 }
 
-if ($api == 'DELETE') {
+if ($api_method == 'DELETE') {
     $body = file_get_contents("php://input");
     echo $util -> massDeleteProducts($body);
 }
